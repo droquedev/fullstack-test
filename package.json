@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "pnpm --filter '**' dev"
+    "dev:all": "pnpm --filter ** dev",
+    "dev:api": "pnpm --filter api dev",
+    "dev:client": "pnpm --filter client dev"
   },
   "keywords": [],
   "author": "",
