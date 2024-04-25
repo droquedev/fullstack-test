@@ -20,7 +20,7 @@ export class FeedController {
 
   @Get('test')
   async test(@Query() query: FeedQueryDto): Promise<string> {
-    console.log(await this.findAll(query));
+    await this.findAll(query);
     return 'Hello, World!';
   }
 }

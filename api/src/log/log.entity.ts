@@ -16,4 +16,7 @@ export class RequestLog {
 
   @Column()
   responseStatus: number;
+
+  @Column()
+  responseTime: string;
 }

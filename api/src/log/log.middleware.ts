@@ -23,9 +23,9 @@ export class LogMiddleware implements NestMiddleware {
       logEntry.method = method;
       logEntry.url = url;
       logEntry.responseStatus = statusCode;
+      logEntry.responseTime = `${end - start}ms`;
 
       await this.logRepository.save(logEntry);
-      console.log(`Logged: ${method} ${url} ${statusCode} [${end - start}ms]`);
     });
 
     next();

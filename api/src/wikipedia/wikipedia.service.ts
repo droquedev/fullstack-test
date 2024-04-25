@@ -8,7 +8,6 @@ export class WikipediaService {
 
   async fetch(date: string): Promise<Feed[]> {
     const url = `https://api.wikimedia.org/feed/v1/wikipedia/en/featured/${date}`;
-    console.log(url);
     const response = await this.httpService.axiosRef.get(url);
 
     const feeds: Feed[] = [];
