@@ -6,7 +6,8 @@
   "scripts": {
     "dev:all": "pnpm --filter ** dev",
     "dev:api": "pnpm --filter api dev",
-    "dev:client": "pnpm --filter client dev"
+    "dev:client": "pnpm --filter client dev",
+    "build": "pnpm --filter ** build"
   },
   "keywords": [],
   "author": "",
