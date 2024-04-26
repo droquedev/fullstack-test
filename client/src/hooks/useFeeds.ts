@@ -1,11 +1,30 @@
-import { useQuery } from "@tanstack/react-query";
+import { useCallback, useState } from "react";
 import { getFeeds } from "../services/feed.service";
+import { Dayjs } from "dayjs";
 
 export const useFeeds = () => {
-  const query = useQuery({
-    queryKey: ["feeds"],
-    queryFn: () => getFeeds({ day: 1, month: 1, year: 2021 }),
-  });
+  const [data, setData] = useState<any[]>([]);
+  const [isFetching, setIsFetching] = useState(false);
 
-  return query;
+  const fetchFeeds = useCallback(
+    async (date: Dayjs) => {
+      if (isFetching) return;
+      setIsFetching(true);
+      const year = date.year();
+      const month = date.month() + 1;
+      const day = date.date();
+
+      const params = { year, month, day };
+      const data = await getFeeds(params);
+      setIsFetching(false);
+      setData((prev) => prev.concat(data));
+    },
+    [isFetching],
+  );
+
+  return {
+    data,
+    fetchFeeds,
+    isFetching,
+  };
 };

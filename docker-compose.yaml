@@ -20,8 +20,6 @@ services:
       args:
         - TARGET=backend
     container_name: backend-service
-    ports:
-      - "8081:3000"
     networks:
       - mynetwork
 
@@ -31,21 +29,12 @@ services:
       args:
         - TARGET=frontend
     container_name: frontend-service
-    ports:
-      - "8080:4173"
+    environment:
+      - REACT_APP_BACKEND_URL=http://backend-service:3000
     networks:
       - mynetwork
-
-  # translator-service:
-  #   image: libretranslate/libretranslate
-  #   container_name: translator-service
-  #   restart: unless-stopped
-  #   healthcheck:
-  #     test: ["CMD-SHELL", "./venv/bin/python scripts/healthcheck.py"]
-  #   ports:
-  #     - "5000:5000"
-  #   networks:
-  #     - mynetwork
+    depends_on:
+      - backend-service
 
 networks:
   mynetwork:

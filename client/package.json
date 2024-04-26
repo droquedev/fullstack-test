@@ -11,10 +11,10 @@
   },
   "dependencies": {
     "@tanstack/react-query": "^5.32.0",
+    "api": "*",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-router-dom": "^6.23.0",
-    "api": "*"
+    "react-router-dom": "^6.23.0"
   },
   "devDependencies": {
     "@types/react": "^18.2.66",
