@@ -15,13 +15,20 @@ export const Card = ({ feed }: CardProps) => {
     addVisited(id);
   };
 
+  let imageSrc =
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b3/Wikipedia-logo-v2-en.svg/892px-Wikipedia-logo-v2-en.svg.png";
+
+  if (feed.thumbnail) {
+    imageSrc = feed.thumbnail.source;
+  }
+
   return (
     <article
       className={`card ${visited[feed.id] ? "visited" : ""}`}
       onClick={onClick}
     >
       <div className="image-container">
-        {feed.thumbnail && <img src={feed.thumbnail.source} alt={feed.title} />}
+        <img src={imageSrc} alt={feed.title} />
       </div>
       <div className="content">
         <span className="date">{dayjs(feed.date).format("MM/DD/YYYY")}</span>

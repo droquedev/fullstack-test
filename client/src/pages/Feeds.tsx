@@ -1,10 +1,12 @@
 import dayjs from "dayjs";
-import { useEffect, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { CardsContainer } from "../components/CardsContainer";
 import { useFeeds } from "../hooks/useFeeds";
 
 export const Feeds = () => {
-  const [date, setDate] = useState(dayjs("2004-02-04"));
+  const [date, setDate] = useState(dayjs());
+  const [language, setLanguage] = useState("en");
+
   const { data, fetchFeeds, isFetching } = useFeeds();
 
   useEffect(() => {
@@ -32,9 +34,26 @@ export const Feeds = () => {
     };
   }, [data, isFetching]);
 
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    fetchFeeds(date);
+  };
+
   return (
     <>
-      <button onClick={() => fetchFeeds(date)}>X</button>
+      <form onSubmit={handleSubmit}>
+        <input
+          type="date"
+          value={date.format("YYYY-MM-DD")}
+          onChange={(e) => setDate(dayjs(e.target.valueAsDate))}
+        />
+        <input
+          type="text"
+          value={language}
+          onChange={(e) => setLanguage(e.target.value)}
+        />
+        <button type="submit">Submit</button>
+      </form>
       <CardsContainer feeds={data} />
     </>
   );
