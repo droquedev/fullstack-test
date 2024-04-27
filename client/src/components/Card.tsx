@@ -10,8 +10,7 @@ export const Card = ({ feed }: CardProps) => {
   const { visited, addVisited } = useVisitedContext();
 
   const onClick = () => {
-    const { url, id } = feed;
-    window.open(url, "_blank");
+    const { id } = feed;
     addVisited(id);
   };
 
@@ -23,18 +22,20 @@ export const Card = ({ feed }: CardProps) => {
   }
 
   return (
-    <article
+    <a
       className={`card ${visited[feed.id] ? "visited" : ""}`}
+      href={feed.url}
+      target="_blank"
       onClick={onClick}
     >
       <div className="image-container">
         <img src={imageSrc} alt={feed.title} />
       </div>
-      <div className="content">
+      <article className="content">
         <span className="date">{dayjs(feed.date).format("MM/DD/YYYY")}</span>
         <h1 className="title">{feed.title}</h1>
         <p className="description">{feed.description}</p>
-      </div>
-    </article>
+      </article>
+    </a>
   );
 };
