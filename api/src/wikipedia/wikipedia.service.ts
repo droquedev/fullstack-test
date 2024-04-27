@@ -33,6 +33,8 @@ export class WikipediaService {
           page.description,
           page.extract,
           page?.thumbnail || null,
+          page.timestamp,
+          page.content_urls.desktop.page,
         );
         feeds.push(feed);
       }

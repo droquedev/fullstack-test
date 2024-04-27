@@ -11,5 +11,7 @@ export class Feed {
     public readonly description: string,
     public readonly extract: string,
     public readonly thumbnail: Thumbnail | null,
+    public readonly date: string,
+    public readonly url: string,
   ) {}
 }
