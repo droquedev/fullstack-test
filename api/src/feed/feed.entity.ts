@@ -9,6 +9,7 @@ export class Feed {
     public readonly id: string,
     public readonly title: string,
     public readonly description: string,
+    public readonly extract: string,
     public readonly thumbnail: Thumbnail | null,
   ) {}
 }

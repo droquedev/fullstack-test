@@ -1,12 +1,10 @@
-import { useInViewport } from "@mantine/hooks";
 import dayjs from "dayjs";
 import { useEffect, useState } from "react";
-import { Card } from "../components/Card";
-import { useFeeds } from "../hooks/useFeeds";
 import { CardsContainer } from "../components/CardsContainer";
+import { useFeeds } from "../hooks/useFeeds";
 
 export const Feeds = () => {
-  const [date, setDate] = useState(dayjs("2021-01-01"));
+  const [date, setDate] = useState(dayjs("2004-02-04"));
   const { data, fetchFeeds, isFetching } = useFeeds();
 
   useEffect(() => {

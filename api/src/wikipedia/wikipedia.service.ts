@@ -30,6 +30,7 @@ export class WikipediaService {
         const feed = new Feed(
           page.pageid,
           page.titles.normalized,
+          page.description,
           page.extract,
           page?.thumbnail || null,
         );
