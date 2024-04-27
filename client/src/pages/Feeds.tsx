@@ -7,7 +7,7 @@ export const Feeds = () => {
   const [date, setDate] = useState(dayjs());
   const [language, setLanguage] = useState("en");
 
-  const { data, fetchFeeds, isFetching } = useFeeds();
+  const { data, fetchFeeds, isFetching } = useFeeds(language);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -23,7 +23,7 @@ export const Feeds = () => {
         const newDate = dayjs(date).add(1, "day");
         setDate(newDate);
         window.removeEventListener("scroll", handleScroll);
-        fetchFeeds(newDate);
+        fetchFeeds(newDate, language);
       }
     };
 
@@ -36,7 +36,7 @@ export const Feeds = () => {
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    fetchFeeds(date);
+    fetchFeeds(date, language);
   };
 
   return (
