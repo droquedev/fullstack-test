@@ -1,29 +1,20 @@
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import { FeedDetail } from "./pages/FeedDetail";
-import { Feeds } from "./pages/Feeds";
+import { Toaster } from "sonner";
 import { VisitedContextProvider } from "./context/VisitedContextProvider";
-
-const queryClient = new QueryClient();
-
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <Feeds />,
-  },
-  {
-    path: "/:id",
-    element: <FeedDetail />,
-  },
-]);
+import { Feeds } from "./pages/Feeds";
 
 function App() {
   return (
-    <QueryClientProvider client={queryClient}>
-      <VisitedContextProvider>
-        <RouterProvider router={router} />
-      </VisitedContextProvider>
-    </QueryClientProvider>
+    <VisitedContextProvider>
+      <Toaster
+        richColors
+        position="top-center"
+        duration={3000}
+        toastOptions={{
+          className: "app-toast",
+        }}
+      />
+      <Feeds />
+    </VisitedContextProvider>
   );
 }
 

@@ -1,16 +1,23 @@
 import { Feed } from "api/src/feed/feed.entity";
 import { Dayjs } from "dayjs";
-import { useCallback, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import { getFeeds } from "../services/feed.service";
 
 export const useFeeds = () => {
   const [data, setData] = useState<Feed[]>([]);
   const [isFetching, setIsFetching] = useState(false);
+  const lastLanguageFetch = useRef("en");
 
   const fetchFeeds = useCallback(
     async (date: Dayjs, lang: string) => {
       if (isFetching) return;
       setIsFetching(true);
+
+      if (lastLanguageFetch.current !== lang) {
+        setData([]);
+        lastLanguageFetch.current = lang;
+      }
+
       const year = date.year();
       const month = date.month() + 1;
       const day = date.date();
