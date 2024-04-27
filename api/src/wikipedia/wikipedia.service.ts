@@ -1,25 +1,14 @@
 import { HttpService } from '@nestjs/axios';
-import { Inject, Injectable } from '@nestjs/common';
-import { Cache } from 'cache-manager';
-import { Feed } from 'src/feed/feed.entity';
+import { Injectable } from '@nestjs/common';
+import { Feed } from '../feed/feed.entity';
 
 @Injectable()
 export class WikipediaService {
-  constructor(
-    private readonly httpService: HttpService,
-    @Inject('CACHE_MANAGER') private cacheManager: Cache,
-  ) {}
+  constructor(private readonly httpService: HttpService) {}
 
   async fetch(date: string): Promise<Feed[]> {
     const url = `https://api.wikimedia.org/feed/v1/wikipedia/en/featured/${date}`;
     const response = await this.httpService.axiosRef.get(url);
-
-    const feedsFromCache = await this.cacheManager.get<Feed[]>(date);
-
-    if (feedsFromCache) {
-      this.cacheManager.set(date, feedsFromCache, 15 * 60 * 1000);
-      return feedsFromCache;
-    }
 
     const feeds: Feed[] = [];
 
@@ -40,7 +29,6 @@ export class WikipediaService {
       }
     }
 
-    this.cacheManager.set(date, feeds, 15 * 60 * 1000);
     return feeds;
   }
 }

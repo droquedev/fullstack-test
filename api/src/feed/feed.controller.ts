@@ -1,11 +1,11 @@
-import { Controller, Get, Query } from '@nestjs/common';
-import { FeedUseCases } from './feed.use-cases';
+import { Controller, Get, Param, Query } from '@nestjs/common';
+import { FeedService } from './feed.service';
 import { Feed } from './feed.entity';
-import { FeedQueryDto } from './feed.dto';
+import { FeedLangDto, FeedQueryDto } from './feed.dto';
 
 @Controller('api/feed')
 export class FeedController {
-  constructor(private feedUseCases: FeedUseCases) {}
+  constructor(private feedUseCases: FeedService) {}
 
   @Get()
   async findAll(@Query() query: FeedQueryDto): Promise<Feed[]> {
@@ -18,9 +18,14 @@ export class FeedController {
     return this.feedUseCases.getFeeds(date);
   }
 
-  @Get('test')
-  async test(@Query() query: FeedQueryDto): Promise<string> {
+  @Get(':lang')
+  async findAllAndTranslate(
+    @Query() query: FeedQueryDto,
+    @Param() params: FeedLangDto,
+  ): Promise<string> {
+    const { lang } = params;
     await this.findAll(query);
+    console.log(lang);
     return 'Hello, World!';
   }
 }

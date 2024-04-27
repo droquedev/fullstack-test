@@ -22,3 +22,8 @@ export class FeedQueryDto {
   @Optional()
   public day: number;
 }
+
+export class FeedLangDto {
+  @ApiProperty({ type: String, example: 'en' })
+  public lang: string;
+}
