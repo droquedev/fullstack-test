@@ -1,7 +1,7 @@
 import { Controller, Get, Param, Query } from '@nestjs/common';
 import { FeedService } from './feed.service';
 import { Feed } from './feed.entity';
-import { FeedLangDto, FeedQueryDto } from './feed.dto';
+import { FeedQueryDto } from './feed.dto';
 
 @Controller('api/feed')
 export class FeedController {
@@ -21,11 +21,14 @@ export class FeedController {
   @Get(':lang')
   async findAllAndTranslate(
     @Query() query: FeedQueryDto,
-    @Param() params: FeedLangDto,
-  ): Promise<string> {
-    const { lang } = params;
-    await this.findAll(query);
-    console.log(lang);
-    return 'Hello, World!';
+    @Param('lang') lang: string,
+  ): Promise<Feed[]> {
+    const feeds = await this.findAll(query);
+    const translatedFeeds = await this.feedUseCases.getFeedsAndTranslate(
+      feeds,
+      lang,
+    );
+
+    return translatedFeeds;
   }
 }

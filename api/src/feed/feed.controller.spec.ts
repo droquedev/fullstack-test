@@ -3,7 +3,7 @@ import { FeedController } from './feed.controller';
 import { FeedService } from './feed.service';
 import { FeedQueryDto } from './feed.dto';
 import { Feed } from './feed.entity';
-import { WikipediaService } from '../wikipedia/wikipedia.service';
+import { WikipediaService } from '../external/wikipedia.service';
 import { HttpModule } from '@nestjs/axios';
 
 describe('CatsController', () => {

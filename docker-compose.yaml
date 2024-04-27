@@ -36,6 +36,18 @@ services:
     depends_on:
       - backend-service
 
+  big_bear_libretranslate:
+    container_name: big_bear_libretranslate
+    image: libretranslate/libretranslate:v1.5.7
+    restart: unless-stopped
+    ports:
+      - "5000:5000"
+    tty: true
+    healthcheck:
+      test: ["CMD-SHELL", "./venv/bin/python scripts/healthcheck.py"]
+    networks:
+      - mynetwork
+
 networks:
   mynetwork:
     driver: bridge
