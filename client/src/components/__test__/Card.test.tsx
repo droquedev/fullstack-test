@@ -1,8 +1,8 @@
 import { render } from "@testing-library/react";
-import { Feed } from "api/src/feed/feed.entity";
 import { MockedFunction, beforeAll, describe, expect, test, vi } from "vitest";
 import { VisitedContextProvider } from "../../context/VisitedContextProvider";
 import { Card } from "../Card";
+import { Feed } from "../../types";
 
 const feed: Feed = {
   title: "test title",

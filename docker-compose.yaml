@@ -16,37 +16,23 @@ services:
 
   backend-service:
     build:
-      context: .
-      args:
-        - TARGET=backend
+      context: ./api
     container_name: backend-service
+    environment:
+      - OPENAI_API_KEY=your_openai_api_key
     networks:
       - mynetwork
 
   frontend-service:
     build:
-      context: .
-      args:
-        - TARGET=frontend
+      context: ./client
     container_name: frontend-service
     environment:
       - REACT_APP_BACKEND_URL=http://backend-service:3000
     networks:
       - mynetwork
-    depends_on:
-      - backend-service
-
-  big_bear_libretranslate:
-    container_name: big_bear_libretranslate
-    image: libretranslate/libretranslate:v1.5.7
-    restart: unless-stopped
-    ports:
-      - "5000:5000"
-    tty: true
-    healthcheck:
-      test: ["CMD-SHELL", "./venv/bin/python scripts/healthcheck.py"]
-    networks:
-      - mynetwork
+    volumes:
+      - ./client/src:/app/src
 
 networks:
   mynetwork:

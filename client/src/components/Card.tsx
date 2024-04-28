@@ -1,6 +1,6 @@
 import dayjs from "dayjs";
 import { useVisitedContext } from "../hooks/useVisitedContext";
-import { Feed } from "api/src/feed/feed.entity";
+import { Feed } from "../types";
 
 interface CardProps {
   feed: Feed;

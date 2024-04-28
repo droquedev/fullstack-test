@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { getLanguages } from "../services/libre-translate.service";
-import { Language } from "api/src/types/language";
+import { Language } from "../types";
 
 export const useLanguages = () => {
   const [languages, setLanguages] = useState<Language[]>([]);

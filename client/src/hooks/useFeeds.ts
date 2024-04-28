@@ -1,7 +1,7 @@
-import { Feed } from "api/src/feed/feed.entity";
 import { Dayjs } from "dayjs";
 import { useCallback, useState } from "react";
 import { getFeeds } from "../services/feed.service";
+import { Feed } from "../types";
 
 export const useFeeds = () => {
   const [data, setData] = useState<Feed[]>([]);

@@ -1,17 +1,13 @@
-import { Language } from "api/src/types/language";
 import axios from "axios";
+import { Language } from "../types";
 
 export const getLanguages = async (): Promise<Language[]> => {
   try {
-    const { data } = await axios.get<any>(
+    const { data } = await axios.get<Language[]>(
       "https://libretranslate.com/languages",
     );
-    const response = data.map((item: Language) => ({
-      code: item.code,
-      name: item.name,
-    }));
-
-    return response;
+  
+    return data;
   } catch (error) {
     return [];
   }
