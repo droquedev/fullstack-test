@@ -10,6 +10,8 @@
     "test:cov": "vitest --coverage",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview --host",
+    "preandroid": "npm run build",
+    "android": "npx cap run android",
     "ionic:build": "npm run build",
     "ionic:serve": "npm run dev"
   },
