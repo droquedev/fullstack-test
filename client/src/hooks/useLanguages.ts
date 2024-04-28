@@ -8,7 +8,6 @@ export const useLanguages = () => {
   useEffect(() => {
     const fetchLanguages = async () => {
       const languages = await getLanguages();
-      console.log(languages);
       setLanguages(languages);
     };
 

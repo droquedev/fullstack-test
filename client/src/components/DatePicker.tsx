@@ -12,9 +12,7 @@ export const DatePicker = (props: DatePickerProps) => {
   const { value, name, onChange } = props;
 
   const onChangeHandler = (date: Date) => {
-    console.log(date);
     const [dateString] = date.toISOString().split("T");
-    console.log(dateString);
     onChange({
       name,
       value: dayjs(dateString).format("YYYY-MM-DD"),
