@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import OpenAI from 'openai';
-import { Feed } from 'src/feed/feed.entity';
+import { Feed } from '../feed/feed.entity';
 
 @Injectable()
 export class OpenAiService {
@@ -44,5 +44,12 @@ export class OpenAiService {
     );
 
     return feedsTranslated;
+  }
+}
+
+export class OpenAiServiceMock {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  async translate(feeds: Feed[], to: string): Promise<Feed[]> {
+    return feeds;
   }
 }

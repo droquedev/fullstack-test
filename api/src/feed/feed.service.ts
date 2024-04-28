@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { Feed } from './feed.entity';
 import { WikipediaService } from '../external/wikipedia.service';
-import { OpenAiService } from 'src/external/openai.service';
+import { OpenAiService } from '../external/openai.service';
 
 @Injectable()
 export class FeedService {
