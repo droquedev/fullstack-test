@@ -34,6 +34,7 @@ export const Feeds = () => {
       if (scrollPercentage >= 90) {
         const date = lastFetchedDate.current;
         const newDate = date!.add(1, "day");
+        lastFetchedDate.current = newDate;
         window.removeEventListener("scroll", handleScroll);
         fetchFeeds(newDate, form.language);
       }
