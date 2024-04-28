@@ -6,7 +6,6 @@ export const getLanguages = async (): Promise<Language[]> => {
     const { data } = await axios.get<any>(
       "https://libretranslate.com/languages",
     );
-
     const response = data.map((item: Language) => ({
       code: item.code,
       name: item.name,

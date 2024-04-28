@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useState } from "react";
 
 export const VisitedContext = createContext<{
   visited: Record<string, boolean>;
@@ -15,14 +15,12 @@ interface VisitedContextProviderProps {
 export const VisitedContextProvider = ({
   children,
 }: VisitedContextProviderProps) => {
-  const [visited, setVisited] = useState<Record<string, boolean>>({});
+  const [visited, setVisited] = useState<Record<string, boolean>>(() => {
+    const visitedDict = localStorage.getItem("visited");
+    if (!visitedDict) return {};
 
-  useEffect(() => {
-    const visited = localStorage.getItem("visited");
-    if (visited) {
-      setVisited(JSON.parse(visited));
-    }
-  }, []);
+    return JSON.parse(visitedDict);
+  });
 
   const addVisited = (id: string) => {
     const newState = { ...visited, [id]: true };
