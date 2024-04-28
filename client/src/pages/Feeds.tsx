@@ -9,7 +9,7 @@ import { useLanguages } from "../hooks/useLanguages";
 import { HandleInputChange } from "../types";
 
 export const Feeds = () => {
-  const { data, fetchFeeds, isFetching, clearFeeds } = useFeeds();
+  const { data, isFetching, totalCount, fetchFeeds, clearFeeds } = useFeeds();
   const { languages } = useLanguages();
   const [form, seForm] = useState<{
     date: Dayjs | null;
@@ -80,23 +80,28 @@ export const Feeds = () => {
 
   return (
     <>
-      <form onSubmit={handleSubmit} className="form">
-        <DatePicker
-          value={form.date?.toISOString()}
-          onChange={handleInputChange}
-          name="date"
-        />
-        <Select
-          options={languageOptions}
-          value={form.language}
-          name="language"
-          onChange={handleInputChange}
-        />
-        <button className="button" type="submit">
-          Search
-        </button>
-      </form>
-      <CardsContainer feeds={data} />
+      <header className="header">
+        <span>{totalCount > 0 && `${totalCount} Results`}</span>
+        <form onSubmit={handleSubmit} className="form">
+          <DatePicker
+            value={form.date?.toISOString()}
+            onChange={handleInputChange}
+            name="date"
+          />
+          <Select
+            options={languageOptions}
+            value={form.language}
+            name="language"
+            onChange={handleInputChange}
+          />
+          <button className="button" type="submit">
+            Search
+          </button>
+        </form>
+      </header>
+      <main>
+        <CardsContainer feeds={data} />
+      </main>
       {isFetching && <div className="loader" />}
     </>
   );
