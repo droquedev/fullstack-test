@@ -1,12 +1,15 @@
 import dayjs, { Dayjs } from "dayjs";
-import { ChangeEvent, FormEvent, useEffect, useState } from "react";
+import { FormEvent, useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 import { CardsContainer } from "../components/CardsContainer";
+import { DatePicker } from "../components/DatePicker";
+import { Select } from "../components/Select";
 import { useFeeds } from "../hooks/useFeeds";
 import { useLanguages } from "../hooks/useLanguages";
+import { HandleInputChange } from "../types";
 
 export const Feeds = () => {
-  const { data, fetchFeeds, isFetching } = useFeeds();
+  const { data, fetchFeeds, isFetching, clearFeeds } = useFeeds();
   const { languages } = useLanguages();
   const [form, seForm] = useState<{
     date: Dayjs | null;
@@ -15,6 +18,8 @@ export const Feeds = () => {
     date: null,
     language: "en",
   });
+
+  const lastFetchedDate = useRef<Dayjs | null>(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -27,8 +32,8 @@ export const Feeds = () => {
         (scrollTop / (scrollHeight - clientHeight)) * 100;
 
       if (scrollPercentage >= 90) {
-        const newDate = dayjs(form.date).add(1, "day");
-        seForm((prev) => ({ ...prev, date: newDate }));
+        const date = lastFetchedDate.current;
+        const newDate = date!.add(1, "day");
         window.removeEventListener("scroll", handleScroll);
         fetchFeeds(newDate, form.language);
       }
@@ -41,10 +46,8 @@ export const Feeds = () => {
     };
   }, [data, isFetching]);
 
-  const handleInputChange = (
-    e: ChangeEvent<HTMLSelectElement | HTMLInputElement>,
-  ) => {
-    const { name, value } = e.target;
+  const handleInputChange: HandleInputChange = (e) => {
+    const { name, value } = e;
 
     let val: string | Dayjs | null = value;
 
@@ -64,35 +67,33 @@ export const Feeds = () => {
       toast.error("Please select a date", {});
       return;
     }
-
+    lastFetchedDate.current = date;
+    clearFeeds();
     fetchFeeds(date, language!);
   };
 
-  const languageOptions = languages.map((lang) => (
-    <option key={lang.code} value={lang.code}>
-      {lang.name}
-    </option>
-  ));
+  const languageOptions = languages.map((lang) => ({
+    label: lang.name,
+    value: lang.code,
+  }));
 
   return (
     <>
       <form onSubmit={handleSubmit} className="form">
-        <input
-          type="date"
-          name="date"
-          id="date"
+        <DatePicker
+          value={form.date?.toISOString()}
           onChange={handleInputChange}
-          value={form.date?.format("YYYY-MM-DD") || ""}
+          name="date"
         />
-        <select
-          id="language"
+        <Select
+          options={languageOptions}
+          value={form.language}
           name="language"
           onChange={handleInputChange}
-          value={form.language}
-        >
-          {languageOptions}
-        </select>
-        <button type="submit">Submit</button>
+        />
+        <button className="button" type="submit">
+          Search
+        </button>
       </form>
       <CardsContainer feeds={data} />
       {isFetching && <div className="loader" />}

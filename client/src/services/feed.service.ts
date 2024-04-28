@@ -1,4 +1,5 @@
 import axios from "axios";
+import { config } from "../config";
 
 type GetFeedParams = {
   day: number;
@@ -14,12 +15,10 @@ export const getFeeds = async ({ lang, ...params }: GetFeedParams) => {
       endpoint += `/${lang}`;
     }
 
-    const { data } = await axios.get<any>(
-      `http://192.168.68.116:3000/${endpoint}`,
-      {
-        params,
-      },
-    );
+    const { data } = await axios.get<any>(`${config.BE_BASE_URL}/${endpoint}`, {
+      params,
+    });
+
     return data;
   } catch (error) {
     return [];

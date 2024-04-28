@@ -17,8 +17,11 @@
     "api": "workspace:*",
     "ionic": "^5.4.16",
     "react": "^18.2.0",
+    "react-calendar": "^4.8.0",
+    "react-date-picker": "^10.6.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.23.0",
+    "react-select": "^5.8.0",
     "sonner": "^1.4.41"
   },
   "devDependencies": {
